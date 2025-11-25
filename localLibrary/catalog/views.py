@@ -5,6 +5,10 @@ from .models import Book, Author, BookInstance, Genre, Language
 
 
 def index(request):
+    num_visits = request.session.get('num_visits', 0)
+    num_visits += 1
+    request.session['num_visits'] = num_visits
+
     num_books = Book.objects.all().count()
     num_authors = Author.objects.all().count()
     num_genres = Genre.objects.all().count()
@@ -21,6 +25,7 @@ def index(request):
         'num_instances': num_instances,
         'num_instances_available': num_instances_available,
         'num_war': num_war,
+        'num_visits': num_visits,
     }
 
     return render(request, 'catalog/index.html', context=context)
