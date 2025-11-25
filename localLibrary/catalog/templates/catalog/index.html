@@ -1,0 +1,24 @@
+{% extends "./base/base_generic.html" %}
+
+{% block title %}
+  <title>Главная - Библиотека</title>
+{% endblock %}
+
+{% block content %}
+  <h1>Локальная библиотека - Главная</h1>
+  <p>
+    Добро пожаловать в локальную библиотеку. Разработал
+    <em>lisantov</em>!
+  </p>
+  <h2>Динамический контент</h2>
+  <p>Библиотека насчитывает в себе следующие записи:</p>
+  <ul>
+    <li><strong>Книги:</strong> {{ num_books }}</li>
+    <li><strong>Копии:</strong> {{ num_instances }}</li>
+    <li><strong>Доступные копии:</strong> {{ num_instances_available }}</li>
+    <li><strong>Жанры:</strong> {{ num_genres }}</li>
+    <li><strong>Языки:</strong> {{ num_languages }}</li>
+    <li><strong>Авторы:</strong> {{ num_authors }}</li>
+    <li><strong>Книг про войну:</strong> {{ num_war }}</li>
+  </ul>
+{% endblock %}
