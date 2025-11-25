@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.views import generic
+
 from .models import Book, Author, BookInstance, Genre, Language
 
 
@@ -9,7 +11,7 @@ def index(request):
     num_languages = Language.objects.all().count()
     num_instances = BookInstance.objects.all().count()
     num_instances_available = BookInstance.objects.filter(status__exact='a').count()
-    num_war = Book.objects.filter(title__contains='Война').count()
+    num_war = Book.objects.filter(title__icontains='Война').count()
 
     context = {
         'num_books': num_books,
@@ -22,3 +24,21 @@ def index(request):
     }
 
     return render(request, 'catalog/index.html', context=context)
+
+class BookListView(generic.ListView):
+    model = Book
+    context_object_name = 'book_list'
+    template_name = 'catalog/book_list.html'
+    paginate_by = 3
+
+class BookDetailView(generic.DetailView):
+    model = Book
+
+class AuthorListView(generic.ListView):
+    model = Author
+    context_object_name = 'author_list'
+    template_name = 'catalog/author_list.html'
+    paginate_by = 3
+
+class AuthorDetailView(generic.DetailView):
+    model = Author
