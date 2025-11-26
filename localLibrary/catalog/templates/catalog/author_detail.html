@@ -1,8 +1,6 @@
 {% extends "./base/base_generic.html" %}
 
-{% block title %}
-  <title>{{ author.first_name }} {{ author.last_name }} - Библиотека</title>
-{% endblock %}
+{% block title %}{{ author.first_name }} {{ author.last_name }}{% endblock %}
 
 {% block content %}
   <h1>Автор: {{ author.first_name }} {{ author.last_name }}</h1>

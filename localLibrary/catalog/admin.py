@@ -7,14 +7,14 @@ admin.site.register(Language)
 @admin.register(BookInstance)
 class BookInstanceAdmin(admin.ModelAdmin):
     list_filter = ('status', 'due_back')
-    list_display = ('display_book', 'id', 'due_back', 'status')
+    list_display = ('display_book', 'status', 'borrower', 'due_back', 'id')
 
     fieldsets = (
         (None, {
             'fields': ('book', 'imprint', 'id')
         }),
         ('Доступность', {
-            'fields': ('status', 'due_back')
+            'fields': ('status', 'due_back', 'borrower')
         }),
     )
 class BookInline(admin.TabularInline):

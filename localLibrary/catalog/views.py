@@ -1,8 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.views import generic
-
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .models import Book, Author, BookInstance, Genre, Language
-
 
 def index(request):
     num_visits = request.session.get('num_visits', 0)
@@ -47,3 +46,29 @@ class AuthorListView(generic.ListView):
 
 class AuthorDetailView(generic.DetailView):
     model = Author
+
+class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
+    model = BookInstance
+    context_object_name = 'bookinstance_list'
+    template_name = 'catalog/book_list_borrowed_user.html'
+    paginate_by = 3
+
+    def get_queryset(self):
+        return (
+            BookInstance.objects.filter(borrower=self.request.user)
+            .filter(status__exact='o')
+            .order_by('due_back')
+        )
+
+class LoanedBooksListView(PermissionRequiredMixin, generic.ListView):
+    permission_required = 'catalog.can_mark_returned'
+    model = BookInstance
+    context_object_name = 'bookinstance_list'
+    template_name = 'catalog/book_list_borrowed.html'
+    paginate_by = 3
+
+    def get_queryset(self):
+        return (
+            BookInstance.objects.filter(status__exact='o')
+            .order_by('due_back')
+        )

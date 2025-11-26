@@ -1,8 +1,6 @@
 {% extends "./base/base_generic.html" %}
 
-{% block title %}
-  <title>{{ book.title }} - Библиотека</title>
-{% endblock %}
+{% block title %}{{ book.title }}{% endblock %}
 
 {% block content %}
   <h1>Название: {{ book.title }}</h1>
