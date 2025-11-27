@@ -12,6 +12,19 @@
   <p><strong>Язык:</strong> {{ book.language }}</p>
   <p><strong>Жанр:</strong> {{ book.genre.all|join:", " }}</p>
 
+  {% if perms.catalog.change_book or perms.catalog.delete_book %}
+  <hr />
+  <ul class="redact-nav">
+    {% if perms.catalog.change_book%}
+      <li><a href="{% url 'book-update' book.id %}">Редактировать книгу</a></li>
+    {% endif %}
+    {% if not book.bookinstance_set.all and perms.catalog.delete_book %}
+      <li><a href="{% url 'book-delete' book.id %}">Удалить книгу</a></li>
+    {% endif %}
+    </ul>
+  <hr />
+  {% endif %}
+
   <div style="margin-left:20px;margin-top:20px">
     <h4>Копии</h4>
 

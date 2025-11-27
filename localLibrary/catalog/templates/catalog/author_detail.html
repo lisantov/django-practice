@@ -8,6 +8,19 @@
   <p><strong>Родился:</strong> {{author.date_of_birth}}</p>
   <p><strong>Умер:</strong> {{author.date_of_death}}</p>
 
+  {% if perms.catalog.change_author or perms.catalog.delete_author %}
+  <hr />
+  <ul class="redact-nav">
+    {% if perms.catalog.change_author %}
+      <li><a href="{% url 'author-update' author.id %}">Update author</a></li>
+    {% endif %}
+    {% if not author.book_set.all and perms.catalog.delete_author %}
+      <li><a href="{% url 'author-delete' author.id %}">Delete author</a></li>
+    {% endif %}
+    </ul>
+  <hr />
+  {% endif %}
+
   <div style="margin-left:20px;margin-top:20px">
     <h4>Книги</h4>
 

@@ -1,0 +1,27 @@
+{% extends "./base/base_generic.html" %}
+
+{% block title %}Подтверждение удаленя{% endblock %}
+
+{% block content %}
+
+<h1>Удаление книги: {{ author }}</h1>
+
+{% if book.bookinstance_set.all %}
+
+<p>Вы не можете удалить эту книги до тех пор, пока не удалены её печатные версии:</p>
+<ul>
+  {% for book_inst in book.bookinstance_set.all %}
+    <li><a href="{% url 'book-detail' book.pk %}">{{book_inst}}</a></li>
+  {% endfor %}
+</ul>
+
+{% else %}
+<p>Вы уверены, что хотите удалить книгу?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" action="" value="Да, удалить">
+</form>
+{% endif %}
+
+{% endblock %}

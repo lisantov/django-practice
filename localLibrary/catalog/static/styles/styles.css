@@ -17,3 +17,11 @@
 #login-button {
   padding-top: 24px;
 }
+
+.redact-nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  padding: 0 16px;
+}
