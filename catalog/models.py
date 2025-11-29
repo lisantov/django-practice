@@ -8,6 +8,9 @@ class Category(models.Model):
         verbose_name="Имя категории"
     )
 
+    def __str__(self):
+        return self.name
+
 class Request(models.Model):
     title = models.CharField(
         max_length=200,
@@ -21,7 +24,7 @@ class Request(models.Model):
     )
     category = models.ForeignKey(
         Category,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         null=True,
         help_text="Категория заявки",
         verbose_name="Категория заявки"
@@ -35,6 +38,11 @@ class Request(models.Model):
         auto_now_add=True,
         verbose_name="Дата создания заявки",
         help_text="Дата создания заявки"
+    )
+    updated_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата изменения заявки",
+        help_text="Дата изменения заявки"
     )
 
     CATEGORY_CHOICES = (
@@ -63,8 +71,9 @@ class AdvancedUser(AbstractUser):
         verbose_name="ФИО пользователя",
         help_text="ФИО"
     )
-    email = models.EmailField(
-        max_length=100,
-        verbose_name="Электронная почта пользователя",
-        help_text="Электронная почта"
-    )
+
+    def __str__(self):
+        return self.username
+
+    class Meta(AbstractUser.Meta):
+        pass

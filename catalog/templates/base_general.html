@@ -3,8 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}Главная{% endblock %} - Design.Pro</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'styles/style.css' %}">
 </head>
 <body>
-
+  <header class="header">
+    <nav class="nav">
+      <a href="{% url 'index' %}" class="nav-link">Главная</a>
+      {% if user.is_authenticated %}
+        <a href="" class="nav-link">Заявки</a>
+        <a href="" class="nav-link">Выход</a>
+      {% else %}
+        <a href="" class="nav-link">Вход</a>
+        <a href="" class="nav-link">Регистрация</a>
+      {% endif %}
+    </nav>
+  </header>
+  <main class="main">
+    {% block content %}
+    {% endblock %}
+  </main>
 </body>
 </html>

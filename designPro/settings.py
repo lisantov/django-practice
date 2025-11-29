@@ -1,6 +1,6 @@
+from pathlib import Path
 import os
-
-from django.conf.global_settings import LOGIN_REDIRECT_URL, MEDIA_URL
+from django.conf.global_settings import LOGIN_REDIRECT_URL, MEDIA_URL, AUTH_USER_MODEL
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'catalog.apps.CatalogConfig',
+    'catalog.apps.CatalogConfig'
 ]
 
 MIDDLEWARE = [
@@ -106,6 +106,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 USE_I18N = True
 
 USE_TZ = True
+
+AUTH_USER_MODEL = 'catalog.AdvancedUser'
 
 
 # Static files (CSS, JavaScript, Images)
