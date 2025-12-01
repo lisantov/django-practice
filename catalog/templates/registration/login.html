@@ -1,0 +1,36 @@
+{% extends "../base_general.html" %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+  <div>
+      <h1>Вход в аккаунт</h1>
+  </div>
+  <div>
+    {% if form.errors %}
+      <p>Имя пользователя или пароль не подходит. Повторите попытку</p>
+    {% endif %}
+
+    {% if next %}
+      {% if user.is_authenticated %}
+        <p>У вас нету прав для доступа к этой странице</p>
+      {% else %}
+        <p>Войдите, чтобы увидеть эту страницу</p>
+      {% endif %}
+    {% endif %}
+    <form class="form" method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      <label class="input-field">
+        {{ form.username.label_tag }}
+        {{ form.username }}
+      </label>
+      <label class="input-field">
+        {{ form.password.label_tag }}
+        {{ form.password }}
+      </label>
+      <input class="submit-button" type="submit" value="Войти" />
+      <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+    <p><a class="link" href="{% url 'register' %}">Ещё не создали аккаунт?</a></p>
+  </div>
+{% endblock %}

@@ -1,4 +1,7 @@
-from django.shortcuts import render
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
+
+from .forms import RegistrationForm
 from .models import Request
 
 def index(request):
@@ -11,3 +14,14 @@ def index(request):
     }
 
     return render(request, 'catalog/index.html', context=context)
+
+def register_view(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('index')
+    else:
+        form = RegistrationForm()
+    return render(request, 'registration/register.html', {'form': form})

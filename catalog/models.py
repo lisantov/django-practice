@@ -69,7 +69,6 @@ class AdvancedUser(AbstractUser):
     fio = models.CharField(
         max_length=300,
         verbose_name="ФИО пользователя",
-        help_text="ФИО"
     )
 
     def __str__(self):

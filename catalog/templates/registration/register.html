@@ -1,0 +1,26 @@
+{% extends '../base_general.html' %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+  <div>
+      <h1>Регистрация</h1>
+  </div>
+  <div>
+    <form class="form" method="post">
+      {% csrf_token %}
+      {% for field in form %}
+        <label class="input-field {% if field.errors%}invalid{% endif %}">
+          {{ field.label }}
+          {{ field }}
+        </label>
+        <span>
+            {{ field.errors }}
+        </span>
+      {% endfor %}
+      <input class="submit-button" type="submit" value="Зарегистрироваться" />
+      <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+    <p><a class="link" href="{% url 'login' %}">Уже есть аккаунт?</a></p>
+  </div>
+{% endblock %}

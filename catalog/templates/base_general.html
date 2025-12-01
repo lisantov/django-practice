@@ -12,10 +12,13 @@
       <a href="{% url 'index' %}" class="nav-link">Главная</a>
       {% if user.is_authenticated %}
         <a href="" class="nav-link">Заявки</a>
-        <a href="" class="nav-link">Выход</a>
+        <form id="logout-form" action="{% url 'logout' %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="nav-link">Выход</button>
+        </form>
       {% else %}
-        <a href="" class="nav-link">Вход</a>
-        <a href="" class="nav-link">Регистрация</a>
+        <a href="{% url 'login' %}" class="nav-link">Вход</a>
+        <a href="{% url 'register' %}" class="nav-link">Регистрация</a>
       {% endif %}
     </nav>
   </header>
