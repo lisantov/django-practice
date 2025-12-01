@@ -1,5 +1,7 @@
 from django.contrib.auth import login
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import render, redirect
+from django.views.generic import CreateView
 
 from .forms import RegistrationForm
 from .models import Request
@@ -25,3 +27,8 @@ def register_view(request):
     else:
         form = RegistrationForm()
     return render(request, 'registration/register.html', {'form': form})
+
+class RequestCreate(PermissionRequiredMixin, CreateView):
+    model = Request
+    fields = ['title', 'description', 'category', 'photo']
+    permission_required = 'catalog.add_request'
