@@ -50,7 +50,7 @@ class RequestForm(forms.ModelForm):
         elif not photo.name.split('.')[-1] in valid_formats:
             raise ValidationError(_(f'Принимаются только файлы формата: {', '.join(valid_formats)}'))
         elif not photo.size / 1024 / 1024 <= valid_size:
-            raise ValidationError(_(f'Файл должен весить не более {valid_size}'))
+            raise ValidationError(_(f'Файл должен весить не более {valid_size}Мб'))
         return photo
 
     class Meta:

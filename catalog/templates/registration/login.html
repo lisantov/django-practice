@@ -7,14 +7,6 @@
       <h1>Вход в аккаунт</h1>
   </div>
   <div>
-
-    {% if next %}
-      {% if user.is_authenticated %}
-        <p>У вас нету прав для доступа к этой странице</p>
-      {% else %}
-        <p>Войдите, чтобы увидеть эту страницу</p>
-      {% endif %}
-    {% endif %}
     <form class="form" method="post" action="{% url 'login' %}">
       {% csrf_token %}
       <label class="input-field">
@@ -27,6 +19,13 @@
       </label>
       {% if form.errors %}
         <p class="error">Имя пользователя или пароль не подходит. Повторите попытку</p>
+      {% endif %}
+      {% if next %}
+        {% if user.is_authenticated %}
+          <p class="error">У вас нету прав для доступа к этой странице</p>
+        {% else %}
+          <p class="error">Войдите, чтобы увидеть эту страницу</p>
+        {% endif %}
       {% endif %}
       <input class="submit-button" type="submit" value="Войти" />
       <input type="hidden" name="next" value="{{ next }}" />
