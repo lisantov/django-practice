@@ -4,7 +4,8 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 import re
 
-from .models import AdvancedUser
+from .models import AdvancedUser, Request
+
 
 class RegistrationForm(UserCreationForm):
     agreement = forms.BooleanField(
@@ -37,3 +38,8 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = AdvancedUser
         fields = ('fio', 'username', 'email', 'password1', 'password2')
+
+class RequestForm(forms.ModelForm):
+    class Meta:
+        model = Request
+        fields = ('title', 'description', 'category', 'photo')

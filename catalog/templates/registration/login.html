@@ -7,9 +7,6 @@
       <h1>Вход в аккаунт</h1>
   </div>
   <div>
-    {% if form.errors %}
-      <p>Имя пользователя или пароль не подходит. Повторите попытку</p>
-    {% endif %}
 
     {% if next %}
       {% if user.is_authenticated %}
@@ -28,6 +25,9 @@
         {{ form.password.label_tag }}
         {{ form.password }}
       </label>
+      {% if form.errors %}
+        <p class="error">Имя пользователя или пароль не подходит. Повторите попытку</p>
+      {% endif %}
       <input class="submit-button" type="submit" value="Войти" />
       <input type="hidden" name="next" value="{{ next }}" />
     </form>

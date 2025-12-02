@@ -1,0 +1,22 @@
+{% extends "../base_general.html" %}
+
+{% block title %}Подтверждение удаленя{% endblock %}
+
+{% block content %}
+
+<h1>Удаление заявки: {{ request }}</h1>
+
+{% if not request.status == 'n'  %}
+
+<p>Вы не можете удалить эту заявку до тех пор, так как она уже была принята в работу</p>
+
+{% else %}
+<p>Вы уверены, что хотите удалить заявку?</p>
+
+<form class="form" method="POST">
+  {% csrf_token %}
+  <input class="submit-button" type="submit" value="Да, удалить">
+</form>
+{% endif %}
+
+{% endblock %}
