@@ -42,7 +42,7 @@ class RegistrationForm(UserCreationForm):
 class RequestForm(forms.ModelForm):
     def clean_photo(self):
         photo = self.cleaned_data['photo']
-        valid_formats = ['png', 'jpg', 'jpeg']
+        valid_formats = ['png', 'jpg', 'jpeg', 'bmp']
         valid_size = 2
 
         if not photo:
