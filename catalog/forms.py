@@ -40,6 +40,19 @@ class RegistrationForm(UserCreationForm):
         fields = ('fio', 'username', 'email', 'password1', 'password2')
 
 class RequestForm(forms.ModelForm):
+    def clean_photo(self):
+        photo = self.cleaned_data['photo']
+        valid_formats = ['png', 'jpg', 'jpeg']
+        valid_size = 2
+
+        if not photo:
+            raise ValidationError(_('Поле не может быть пустым'))
+        elif not photo.name.split('.')[-1] in valid_formats:
+            raise ValidationError(_(f'Принимаются только файлы формата: {', '.join(valid_formats)}'))
+        elif not photo.size / 1024 / 1024 <= valid_size:
+            raise ValidationError(_(f'Файл должен весить не более {valid_size}'))
+        return photo
+
     class Meta:
         model = Request
         fields = ('title', 'description', 'category', 'photo')
