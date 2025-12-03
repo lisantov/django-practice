@@ -7,10 +7,43 @@
         <h1>Все заявки</h1>
     </div>
 
-    {% if requests_list %}
+    <nav class="nav">
+        <a
+          class="filter {% if requests_list.filter == 'n' %} active {% endif %}"
+          href="{% if not requests_list.filter == 'n' %}
+                {% url 'admin_filter_requests' 'n' %}
+            {% else %}
+                {% url 'admin_requests' %}
+            {% endif %}"
+        >
+            Новые
+        </a>
+        <a
+          class="filter {% if requests_list.filter == 'o' %} active {% endif %}"
+          href="{% if not requests_list.filter == 'o' %}
+                {% url 'admin_filter_requests' 'o' %}
+            {% else %}
+                {% url 'admin_requests' %}
+            {% endif %}"
+        >
+            Прогресс
+        </a>
+        <a
+          class="filter {% if requests_list.filter == 'd' %} active {% endif %}"
+          href="{% if not requests_list.filter == 'd' %}
+                {% url 'admin_filter_requests' 'd' %}
+            {% else %}
+                {% url 'admin_requests' %}
+            {% endif %}"
+        >
+            Выполненные
+        </a>
+    </nav>
+
+    {% if requests_list.requests %}
     <ul class="card-grid">
 
-      {% for request in requests_list %}
+      {% for request in requests_list.requests %}
         <li class="card">
             <div class="card-title">
                 <h2>{{ request.title }}</h2>
@@ -38,6 +71,6 @@
     </ul>
 
     {% else %}
-      <p>У вас нету заявок</p>
+      <p>Заявок нету</p>
     {% endif %}
 {% endblock %}

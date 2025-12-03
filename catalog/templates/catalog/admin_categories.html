@@ -1,0 +1,29 @@
+{% extends "../base_general.html" %}
+
+{% block title %}Ваши заявки{% endblock %}
+
+{% block content %}
+    <div>
+        <h1>Все категории</h1>
+    </div>
+
+    {% if categories_list %}
+    <ul class="card-grid">
+
+      {% for category in categories_list %}
+        <li class="card">
+            <div class="card-title">
+                <h2>{{ category.name }}</h2>
+            </div>
+            <a href="{% url 'delete_category' category.id %}" class="delete">
+                {% load static %}
+                <img src="{% static 'icons/delete.svg' %}" alt="Иконка удаления">
+            </a>
+        </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>Заявок нету</p>
+    {% endif %}
+{% endblock %}

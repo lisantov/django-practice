@@ -25,7 +25,8 @@
     {% if user.is_staff %}
     <hr />
       <nav class="nav">
-        <a href="{% url 'admin_requests' %}" class="nav-link admin-link">Администрирование заявок</a>
+        <a href="{% url 'admin_categories' %}" class="nav-link admin-link">Управление категориями</a>
+        <a href="{% url 'admin_requests' %}" class="nav-link admin-link">Управление заявками</a>
       </nav>
     {% endif %}
   </header>

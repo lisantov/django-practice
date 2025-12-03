@@ -8,7 +8,9 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView
 
 from .forms import RegistrationForm, RequestForm
-from .models import Request
+from .models import Request, Category
+from .staff_mixin import UserIsStaffRequired
+
 
 def index(request):
     num_ongoing = Request.objects.filter(status__exact='o').count()
@@ -81,7 +83,38 @@ class DeleteRequestView(LoginRequiredMixin, DeleteView):
         except Exception as e:
             return HttpResponseRedirect(reverse("delete_request", kwargs={'pk': self.object.pk}))
 
-class AdminRequestsView(LoginRequiredMixin, ListView):
+class AdminCategoriesView(LoginRequiredMixin, UserIsStaffRequired, ListView):
+    model = Category
+    context_object_name = 'categories_list'
+    template_name = 'catalog/admin_categories.html'
+
+class DeleteCategoryView(LoginRequiredMixin, UserIsStaffRequired, DeleteView):
+    model = Category
+
+    def form_valid(self, form):
+        try:
+            self.object.delete()
+            return redirect('admin_categories')
+        except Exception as e:
+            return HttpResponseRedirect(reverse("delete_category", kwargs={'pk': self.object.pk}))
+
+class AdminRequestsView(LoginRequiredMixin, UserIsStaffRequired, ListView):
     model = Request
     context_object_name = 'requests_list'
     template_name = 'catalog/admin_requests.html'
+
+    def get_queryset(self):
+        return ({
+            'requests': Request.objects.all,
+        })
+
+class AdminRequestsFilterView(LoginRequiredMixin, UserIsStaffRequired, ListView):
+    model = Request
+    context_object_name = 'requests_list'
+    template_name = 'catalog/admin_requests.html'
+
+    def get_queryset(self):
+        return ({
+            'requests': Request.objects.filter(status__exact=self.kwargs['filter']),
+            'filter': self.kwargs['filter']
+        })
