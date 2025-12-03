@@ -52,22 +52,32 @@
                 <h2>{{ request.title }}</h2>
                 <p class="card-tag">{{ request.category }}</p>
             </div>
-            <img class="image" src="{{ request.photo.url }}" alt="{{ request.title }}" >
-            <p class="date">{{ request.created_at }}</p>
-            <p class="status
-                {% if request.status == 'o' %}
-                    going
-                {% elif request.status == 'd' %}
-                    done
+            <div class="image-container">
+                <img class="image" src="{{ request.photo.url }}" alt="{{ request.title }}" >
+                <p class="date">{{ request.created_at }}</p>
+                <p class="status
+                    {% if request.status == 'o' %}
+                        going
+                    {% elif request.status == 'd' %}
+                        done
+                    {% endif %}
+                ">
+                    {{ request.get_status_display }}
+                </p>
+            </div>
+            <div class="actions">
+                {% if request.status == 'n' %}
+                    <a href="{% url 'delete_request' request.id %}" class="delete">
+                        {% load static %}
+                        <img src="{% static 'icons/delete.svg' %}" alt="Иконка удаления">
+                    </a>
                 {% endif %}
-            ">
-                {{ request.get_status_display }}
-            </p>
-            {% if request.status == 'n' %}
-                <a href="{% url 'delete_request' request.id %}" class="delete">
-                    {% load static %}
-                    <img src="{% static 'icons/delete.svg' %}" alt="Иконка удаления">
-                </a>
+            </div>
+            {% if request.commentary %}
+                <div>
+                    <p>Комментарий к работе:</p>
+                    <p>{{ request.commentary }}</p>
+                </div>
             {% endif %}
         </li>
       {% endfor %}

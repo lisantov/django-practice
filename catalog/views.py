@@ -5,9 +5,9 @@ from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMix
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DeleteView
+from django.views.generic import CreateView, ListView, DeleteView, UpdateView
 
-from .forms import RegistrationForm, RequestForm
+from .forms import RegistrationForm, RequestForm, ChangeStatusForm
 from .models import Request, Category
 from .staff_mixin import UserIsStaffRequired
 
@@ -123,3 +123,25 @@ class AdminRequestsFilterView(LoginRequiredMixin, UserIsStaffRequired, ListView)
             'requests': Request.objects.filter(status__exact=self.kwargs['filter']),
             'filter': self.kwargs['filter']
         })
+
+@login_required
+def update_request_view(request, pk):
+    requestInst = get_object_or_404(Request, pk=pk)
+    if request.user.is_staff and requestInst.status == 'n':
+        if request.method == 'POST':
+            form = ChangeStatusForm(request.POST, request.FILES)
+            if form.is_valid():
+                if form.cleaned_data['status'] == 'o':
+                    requestInst.status = 'o'
+                    requestInst.commentary = form.cleaned_data['commentary']
+                    requestInst.save()
+                elif form.cleaned_data['status'] == 'd':
+                    requestInst.status = 'd'
+                    requestInst.photo_after = form.cleaned_data['photo_after']
+                    requestInst.save()
+                return redirect('admin_requests')
+        else:
+            form = ChangeStatusForm(instance=requestInst)
+        return render(request, 'catalog/request_update.html', {'form': form})
+    else:
+        return redirect('index')

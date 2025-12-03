@@ -49,20 +49,22 @@
                 <h2>{{ request.title }}</h2>
                 <p class="card-tag">{{ request.category }}</p>
             </div>
-            <img class="image" src="{{ request.photo.url }}" alt="{{ request.title }}" >
-            <p class="date">{{ request.created_at }}</p>
-            <p class="status
-                {% if request.status == 'o' %}
-                    going
-                {% elif request.status == 'd' %}
-                    done
-                {% endif %}
-            ">
-                {{ request.get_status_display }}
-            </p>
+            <div class="image-container">
+                <img class="image" src="{{ request.photo.url }}" alt="{{ request.title }}" >
+                <p class="date">{{ request.created_at }}</p>
+                <p class="status
+                    {% if request.status == 'o' %}
+                        going
+                    {% elif request.status == 'd' %}
+                        done
+                    {% endif %}
+                ">
+                    {{ request.get_status_display }}
+                </p>
+            </div>
             <div class="actions">
-                {% if request.status == 'n' or request.status == 'o' %}
-                    <a href="{% url 'delete_request' request.id %}" class="edit">
+                {% if request.status == 'n' %}
+                    <a href="{% url 'redact_request' request.id %}" class="edit">
                         {% load static %}
                         <img src="{% static 'icons/edit.png' %}" alt="Иконка редактирования">
                     </a>
@@ -73,6 +75,12 @@
                     </a>
                 {% endif %}
             </div>
+            {% if request.commentary %}
+                <div>
+                    <p>Комментарий к работе:</p>
+                    <p>{{ request.commentary }}</p>
+                </div>
+            {% endif %}
         </li>
       {% endfor %}
     </ul>

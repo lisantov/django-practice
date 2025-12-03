@@ -1,0 +1,53 @@
+{% extends "../base_general.html" %}
+
+{% block title %}Смена статуса заявки{% endblock %}
+
+{% block content %}
+  <div>
+      <h1>Форма заявки</h1>
+  </div>
+  <form enctype="multipart/form-data" name="change-status" class="form" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        <label class="input-field {% if field.errors %}invalid{% endif %}">
+          {{ field.label }}
+          {{ field }}
+        </label>
+        <span>
+            {{ field.errors }}
+        </span>
+    {% endfor %}
+    <input class="submit-button" type="submit" value="Сохранить" />
+  </form>
+
+  <script defer lang="js">
+    const form = document.forms['change-status'];
+    const formFields = {
+      status: form.elements['status'],
+      commentary: form.elements['commentary'],
+      photo: form.elements['photo_after'],
+    };
+
+    const handleStatusChange = (value) => {
+      switch (value) {
+        case 'o':
+          formFields.commentary.parentElement.style.display = 'flex';
+          formFields.photo.parentElement.style.display = 'none';
+          break;
+        case 'd':
+          formFields.commentary.parentElement.style.display = 'none';
+          formFields.photo.parentElement.style.display = 'flex';
+          break;
+        default:
+          formFields.commentary.parentElement.style.display = 'none';
+          formFields.photo.parentElement.style.display = 'none';
+          break;
+      }
+    }
+
+    const handleStatusChangeAdapter = (e) => handleStatusChange(e.target.value)
+
+    formFields.status.addEventListener('input', handleStatusChangeAdapter);
+    handleStatusChange(formFields.status.value)
+  </script>
+{% endblock %}

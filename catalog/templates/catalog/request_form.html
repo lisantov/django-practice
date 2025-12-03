@@ -9,7 +9,6 @@
   <form enctype="multipart/form-data" class="form" method="post">
     {% csrf_token %}
     {% for field in form %}
-    {% if not field.type == "hidden" %}
       <label class="input-field {% if field.errors%}invalid{% endif %}">
         {{ field.label }}
         {{ field }}
@@ -17,7 +16,6 @@
       <span>
           {{ field.errors }}
       </span>
-    {% endif %}
     {% endfor %}
     <input class="submit-button" type="submit" value="Сохранить" />
   </form>
