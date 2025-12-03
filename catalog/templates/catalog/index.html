@@ -19,8 +19,13 @@
                             <h2>{{ request.title }}</h2>
                             <p class="card-tag">{{ request.category }}</p>
                         </div>
-                        <img class="image" src="{{ request.photo.url }}" alt="{{ request.title }}" >
-                        <p class="date">{{ request.created_at }}</p>
+                        <div class="image-container">
+                            <img class="image" src="{{ request.photo.url }}" alt="{{ request.title }}" >
+                            <p class="date">{{ request.created_at }}</p>
+                            {% if request.photo_after %}
+                                <img class="after-image" src="{{ request.photo_after.url }}" alt="Результат работы">
+                            {% endif %}
+                        </div>
                     </li>
                 {% endfor %}
             </ul>

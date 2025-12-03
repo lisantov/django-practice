@@ -75,7 +75,10 @@ class ChangeStatusForm(forms.ModelForm):
 
     def clean_commentary(self):
         if self.cleaned_data['status'] == 'o':
-            return self.cleaned_data['commentary']
+            data = self.cleaned_data['commentary']
+            if data:
+                raise ValidationError(_('Поле не может быть пустым'))
+            return data
         return ''
 
     class Meta:

@@ -310,3 +310,8 @@ input[type="checkbox"] {
     border-color: #b5e1ff;
     color: #34acff;
 }
+
+.after-image {
+    position: absolute;
+    inset: 0;
+}

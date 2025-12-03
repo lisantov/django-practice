@@ -1,3 +1,5 @@
+import datetime
+
 from audioop import reverse
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required, permission_required
@@ -134,6 +136,7 @@ def update_request_view(request, pk):
                 if form.cleaned_data['status'] == 'o':
                     requestInst.status = 'o'
                     requestInst.commentary = form.cleaned_data['commentary']
+                    requestInst.updated_at = datetime.datetime.now()
                     requestInst.save()
                 elif form.cleaned_data['status'] == 'd':
                     requestInst.status = 'd'
