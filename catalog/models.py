@@ -47,6 +47,13 @@ class Request(models.Model):
         upload_to="images/",
         verbose_name="Фото помещения или его план"
     )
+    photo_after = models.ImageField(
+        upload_to="images/",
+        verbose_name="Фото выполненной работы",
+        blank=True,
+        null=True
+    )
+
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name="Дата создания заявки",
@@ -55,7 +62,6 @@ class Request(models.Model):
         auto_now_add=True,
         verbose_name="Дата изменения заявки",
     )
-
     STATUS_CHOICES = (
         ('n', 'Новая'),
         ('o', 'Принято в работу'),

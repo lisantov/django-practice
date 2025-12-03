@@ -123,11 +123,22 @@
     margin-bottom: 6px;
 }
 
-input {
+input,
+textarea,
+select {
     width: 50%;
     padding: 6px 8px;
     border-radius: 6px;
     border: 1px solid #bbb;
+}
+
+select {
+    background-color: transparent;
+    cursor: pointer;
+}
+
+textarea {
+    resize: none;
 }
 
 input[type="checkbox"] {
