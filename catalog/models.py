@@ -40,12 +40,17 @@ class Request(models.Model):
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
-        null=True,
         verbose_name="Категория заявки"
     )
     photo = models.ImageField(
         upload_to="images/",
         verbose_name="Фото помещения или его план"
+    )
+    commentary = models.TextField(
+        max_length=600,
+        verbose_name="Комментарий к работе",
+        null=True,
+        blank=True
     )
     photo_after = models.ImageField(
         upload_to="images/",

@@ -52,9 +52,20 @@ class UserRequestsView(LoginRequiredMixin, ListView):
     template_name = 'catalog/user_requests.html'
 
     def get_queryset(self):
-        return (
-            Request.objects.filter(author=self.request.user)
-        )
+        return ({
+            'requests': Request.objects.filter(author=self.request.user)
+        })
+
+class UserRequestsFilterView(LoginRequiredMixin, ListView):
+    model = Request
+    context_object_name = 'requests_list'
+    template_name = 'catalog/user_requests.html'
+
+    def get_queryset(self):
+        return ({
+            'requests': Request.objects.filter(author=self.request.user).filter(status__exact=self.kwargs['filter']),
+            'filter': self.kwargs['filter']
+        })
 
 class DeleteRequestView(LoginRequiredMixin, DeleteView):
     model = Request
@@ -70,10 +81,7 @@ class DeleteRequestView(LoginRequiredMixin, DeleteView):
         except Exception as e:
             return HttpResponseRedirect(reverse("delete_request", kwargs={'pk': self.object.pk}))
 
-# @login_required
-# def delete_request_view(request, pk):
-#     requestInst = get_object_or_404(Request, pk=pk)
-#     if requestInst.author == request.user:
-#         if requestInst.status == 'n':
-#             requestInst.delete()
-#             return redirect('user_requests')
+class AdminRequestsView(LoginRequiredMixin, ListView):
+    model = Request
+    context_object_name = 'requests_list'
+    template_name = 'catalog/admin_requests.html'

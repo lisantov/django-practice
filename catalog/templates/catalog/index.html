@@ -11,17 +11,21 @@
     <div>
         <h2>Последние выполненные работы</h2>
         <br>
-        <ul class="card-grid">
-            {% for request in last_done %}
-                <li class="card">
-                    <div class="card-title">
-                        <h2>{{ request.title }}</h2>
-                        <p class="card-tag">{{ request.category }}</p>
-                    </div>
-                    <img class="image" src="{{ request.photo.url }}" alt="{{ request.title }}" >
-                    <p class="date">{{ request.created_at }}</p>
-                </li>
-            {% endfor %}
-        </ul>
+        {% if last_done %}
+            <ul class="card-grid">
+                {% for request in last_done %}
+                    <li class="card">
+                        <div class="card-title">
+                            <h2>{{ request.title }}</h2>
+                            <p class="card-tag">{{ request.category }}</p>
+                        </div>
+                        <img class="image" src="{{ request.photo.url }}" alt="{{ request.title }}" >
+                        <p class="date">{{ request.created_at }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Завершённых заявок нету</p>
+        {% endif %}
     </div>
 {% endblock %}

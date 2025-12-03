@@ -3,12 +3,50 @@
 {% block title %}Ваши заявки{% endblock %}
 
 {% block content %}
-    <h1>Ваши заявки</h1>
+    <div>
+        {% if user.is_authenticated %}
+          <p>Здравствуйте, {{ user }}</p>
+        {% endif %}
+        <h1>Ваши заявки</h1>
+    </div>
 
-    {% if requests_list %}
+    <nav class="nav">
+        <a
+          class="filter {% if requests_list.filter == 'n' %} active {% endif %}"
+          href="{% if not requests_list.filter == 'n' %}
+                {% url 'user_filter_requests' 'n' %}
+            {% else %}
+                {% url 'user_requests' %}
+            {% endif %}"
+        >
+            Новые
+        </a>
+        <a
+          class="filter {% if requests_list.filter == 'o' %} active {% endif %}"
+          href="{% if not requests_list.filter == 'o' %}
+                {% url 'user_filter_requests' 'o' %}
+            {% else %}
+                {% url 'user_requests' %}
+            {% endif %}"
+        >
+            Прогресс
+        </a>
+        <a
+          class="filter {% if requests_list.filter == 'd' %} active {% endif %}"
+          href="{% if not requests_list.filter == 'd' %}
+                {% url 'user_filter_requests' 'd' %}
+            {% else %}
+                {% url 'user_requests' %}
+            {% endif %}"
+        >
+            Выполненные
+        </a>
+    </nav>
+
+    {% if requests_list.requests %}
     <ul class="card-grid">
 
-      {% for request in requests_list %}
+      {% for request in requests_list.requests %}
         <li class="card">
             <div class="card-title">
                 <h2>{{ request.title }}</h2>
@@ -26,7 +64,7 @@
                 {{ request.get_status_display }}
             </p>
             {% if request.status == 'n' %}
-                <a href="{% url 'delete_request' request.id %}?next='users_request'" class="delete">
+                <a href="{% url 'delete_request' request.id %}" class="delete">
                     {% load static %}
                     <img src="{% static 'icons/delete.svg' %}" alt="Иконка удаления">
                 </a>
