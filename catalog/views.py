@@ -88,6 +88,11 @@ class AdminCategoriesView(LoginRequiredMixin, UserIsStaffRequired, ListView):
     context_object_name = 'categories_list'
     template_name = 'catalog/admin_categories.html'
 
+class CreateCategoryView(LoginRequiredMixin, UserIsStaffRequired, CreateView):
+    model = Category
+    fields = ['name']
+    success_url = reverse_lazy('admin_categories')
+
 class DeleteCategoryView(LoginRequiredMixin, UserIsStaffRequired, DeleteView):
     model = Category
 

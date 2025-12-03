@@ -1,6 +1,6 @@
 {% extends "../base_general.html" %}
 
-{% block title %}Ваши заявки{% endblock %}
+{% block title %}Админ: Заявки{% endblock %}
 
 {% block content %}
     <div>
@@ -60,12 +60,19 @@
             ">
                 {{ request.get_status_display }}
             </p>
-            {% if request.status == 'n' %}
-                <a href="{% url 'delete_request' request.id %}" class="delete">
-                    {% load static %}
-                    <img src="{% static 'icons/delete.svg' %}" alt="Иконка удаления">
-                </a>
-            {% endif %}
+            <div class="actions">
+                {% if request.status == 'n' or request.status == 'o' %}
+                    <a href="{% url 'delete_request' request.id %}" class="edit">
+                        {% load static %}
+                        <img src="{% static 'icons/edit.png' %}" alt="Иконка редактирования">
+                    </a>
+                {% endif %}
+                {% if request.status == 'n' %}
+                    <a href="{% url 'delete_request' request.id %}" class="delete">
+                        <img src="{% static 'icons/delete.svg' %}" alt="Иконка удаления">
+                    </a>
+                {% endif %}
+            </div>
         </li>
       {% endfor %}
     </ul>
