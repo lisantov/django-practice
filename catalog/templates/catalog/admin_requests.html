@@ -51,6 +51,12 @@
             </div>
             <div class="image-container">
                 <img class="image" src="{{ request.photo.url }}" alt="{{ request.title }}" >
+                {% if request.photo_after %}
+                    <div class="after-image-container">
+                        <img class="after-image" src="{{ request.photo_after.url }}" alt="Результат работы">
+                        <div class="image-slide"></div>
+                    </div>
+                {% endif %}
                 <p class="date">{{ request.created_at }}</p>
                 <p class="status
                     {% if request.status == 'o' %}
@@ -88,4 +94,6 @@
     {% else %}
       <p>Заявок нету</p>
     {% endif %}
+
+    <script defer src="{% static 'scripts/curtain.js' %}"></script>
 {% endblock %}

@@ -111,28 +111,10 @@
     color: #fff;
 }
 
-.image {
-    width: 100%;
-    height: 100%;
-    border-radius: 4px;
-    object-position: center;
-    object-fit: cover;
-    max-height: 240px;
-}
-
-.image-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    object-position: center;
-    object-fit: cover;
-    max-height: 240px;
-}
-
 .date {
     position: absolute;
-    right: 12px;
-    bottom: 12px;
+    right: 4px;
+    bottom: 4px;
     padding: 2px 8px;
     background-color: #666666bf;
     color: #fff;
@@ -245,8 +227,8 @@ input[type="checkbox"] {
 
 .status {
     position: absolute;
-    left: 12px;
-    bottom: 12px;
+    left: 4px;
+    bottom: 4px;
     padding: 2px 8px;
     background-color: rgba(120, 191, 106, 0.75);
     color: #fff;
@@ -311,7 +293,51 @@ input[type="checkbox"] {
     color: #34acff;
 }
 
+.image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    object-fit: cover;
+    max-height: 240px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.image {
+    width: 100%;
+    height: 240px;
+    max-height: 240px;
+    object-position: center;
+    object-fit: cover;
+}
+
+.after-image-container {
+    position: absolute;
+    right: 0;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    object-position: center;
+    object-fit: cover;
+    overflow: hidden;
+}
+
 .after-image {
     position: absolute;
-    inset: 0;
+    right: 0;
+    height: 260px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.image-slide {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -2px;
+    width: 2px;
+    padding: 0 3px;
+    background-color: #fff;
+    cursor: col-resize;
 }

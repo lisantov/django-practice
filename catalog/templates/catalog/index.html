@@ -21,10 +21,13 @@
                         </div>
                         <div class="image-container">
                             <img class="image" src="{{ request.photo.url }}" alt="{{ request.title }}" >
-                            <p class="date">{{ request.created_at }}</p>
                             {% if request.photo_after %}
-                                <img class="after-image" src="{{ request.photo_after.url }}" alt="Результат работы">
+                                <div class="after-image-container">
+                                    <img class="after-image" src="{{ request.photo_after.url }}" alt="Результат работы">
+                                    <div class="image-slide"></div>
+                                </div>
                             {% endif %}
+                            <p class="date">{{ request.created_at }}</p>
                         </div>
                     </li>
                 {% endfor %}
@@ -33,4 +36,7 @@
             <p>Завершённых заявок нету</p>
         {% endif %}
     </div>
+
+    {% load static %}
+    <script defer src="{% static 'scripts/curtain.js' %}"></script>
 {% endblock %}

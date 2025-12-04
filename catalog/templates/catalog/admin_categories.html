@@ -13,10 +13,12 @@
             <div class="card-title">
                 <h2>{{ category.name }}</h2>
             </div>
+            <div class="actions">
             <a href="{% url 'delete_category' category.id %}" class="delete">
                 {% load static %}
                 <img src="{% static 'icons/delete.svg' %}" alt="Иконка удаления">
             </a>
+            </div>
         </li>
       {% endfor %}
         <li class="card add">
