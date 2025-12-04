@@ -8,6 +8,11 @@
     </div>
 
     <ul class="card-grid">
+        <li class="card add">
+            <a href="{% url 'create_category' %}" class="card-title">
+                <h2>Добавить категорию</h2>
+            </a>
+        </li>
       {% for category in categories_list %}
         <li class="card">
             <div class="card-title">
@@ -21,10 +26,5 @@
             </div>
         </li>
       {% endfor %}
-        <li class="card add">
-            <a href="{% url 'create_category' %}" class="card-title">
-                <h2>Добавить категорию</h2>
-            </a>
-        </li>
     </ul>
 {% endblock %}
